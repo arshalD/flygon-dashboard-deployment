@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import {
   Form, Spin,
   Input,
@@ -16,6 +16,7 @@ const children = ['Street Light'];
 var  db
 
 const AddProduct = () => {
+  const [, forceUpdate] = useReducer(x => x + 1, 0)
   const [dataArray, setDataArray] = useState([])
   const dataFetch = () =>{
     var docRef = db.collection("category").doc("category");
@@ -25,6 +26,7 @@ const AddProduct = () => {
                 console.log("Document data:", doc.data());
                 let catData = Object.keys(doc.data());
                 setDataArray(catData)
+                forceUpdate()
 
             } else {
                 console.log("No such document!");
@@ -36,6 +38,7 @@ const AddProduct = () => {
 
   useEffect(() =>{
     db = firebase.firestore();
+    dataFetch()
   },[])
   const [form] = Form.useForm();
   const [componentSize, setComponentSize] = useState('large');
