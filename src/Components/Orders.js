@@ -167,8 +167,6 @@ class Orders extends Component {
         dataIndex: 'timestamp',
         key: 'timestamp',
         width: '20%',
-        sorter: (a, b) => a.timestamp.length - b.timestamp.length,
-        sortDirections: ['descend', 'ascend'],
         render: (key)=> {return(<p>{new Date(key*1000).toLocaleString()}</p>)}
       },
       {
@@ -181,6 +179,8 @@ class Orders extends Component {
         dataIndex: 'paymentId',
         key: 'paymentId',
         ...this.getColumnSearchProps('paymentId'),
+        render: (key)=>
+          <Button type="link" onClick={()=>{window.open(`https://dashboard.razorpay.com/app/payments?id=${key}`, '_blank');}}>{key}</Button>
       },
       {
         title: 'Print Invoice',

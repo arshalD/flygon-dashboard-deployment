@@ -11,7 +11,8 @@ export const ProtectedRoute = ({
     <Route
       {...rest}
       render={props => {
-        if (firebase.auth().currentUser !== null) {
+        console.log(firebase.auth().currentUser)
+        if (firebase.auth().currentUser !== null || sessionStorage.getItem("user") !== null) {
           return <Component {...props} />;
         } else {
           return (

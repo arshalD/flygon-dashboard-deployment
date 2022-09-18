@@ -33,7 +33,7 @@ class App extends Component {
         <Sider style={{width:'350px'}}>
           <Tab />
         </Sider>
-        <Layout style={{height:'100vh'}}>
+        <Layout style={{height:'100vw'}}>
           <Content
             style={{
               margin: '26px 12vh',

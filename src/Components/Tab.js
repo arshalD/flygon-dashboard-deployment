@@ -1,6 +1,6 @@
 import { Button, Menu, Space, Switch } from 'antd';
 import {Component} from 'react'
-import { ToolOutlined, FundViewOutlined, LogoutOutlined } from '@ant-design/icons';
+import { ToolOutlined, FundViewOutlined, LogoutOutlined, LinkOutlined } from '@ant-design/icons';
 import { Link, useHistory, Redirect, Route } from 'react-router-dom'
 import firebase from "firebase/app";
 import "firebase/auth";
@@ -59,8 +59,8 @@ export default class Tab extends Component {
             {/* <Menu.Item key="4">Option 4</Menu.Item> */}
           </SubMenu>
           <SubMenu key="sub2" icon={<FundViewOutlined />} title="Apps">
-            <Menu.Item key="6">Razorpay</Menu.Item>
-            <Menu.Item key="9">Facebook Chat</Menu.Item>
+            <Menu.Item key="6" icon={<LinkOutlined />} onClick={()=>{window.open('https://dashboard.razorpay.com/app/payments', '_blank');}}>Razorpay</Menu.Item>
+            <Menu.Item key="9" icon={<LinkOutlined />} onClick={()=>{window.open('https://business.facebook.com/latest/inbox', '_blank');}}>Facebook Chat</Menu.Item>
           </SubMenu>
 
               <Switch

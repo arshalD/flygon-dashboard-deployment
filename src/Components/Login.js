@@ -1,25 +1,49 @@
-import { Button, Col, Form, Image, Input, message, Row } from "antd"
+import { Button, Col, Form, Image, Input, message, Row, Typography } from "antd"
 import image from '../login.svg'
 import firebase from "firebase/app";
 import "firebase/auth";
 import { useHistory } from "react-router-dom";
+import { useState } from "react";
+const { Title } = Typography;
 
 const Login = (props)=>{
+    const [loading, setLoading] = useState(false);
+    const [resetLoading, setResetLoading] = useState(false);
     const history = useHistory()
+    const resetPassword = ()=>{
+        setResetLoading(true)
+        firebase.auth().sendPasswordResetEmail("arshaldmathew@gmail.com").then(() => {
+            // Password reset email sent!
+            message.info("Password reset email sent!")
+            setResetLoading(false)
+            // ..
+          })
+          .catch((error) => {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // ..
+            message.error(errorMessage)
+            setResetLoading(false)
+
+          });
+    }
     const onFinish = (values) => {
+        setLoading(true)
         firebase.auth()
-        // .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
         .signInWithEmailAndPassword(values.email, values.password)
         .then((userCredential) => {
             // Signed in
             var user = userCredential.user;
             console.log(user);
+            sessionStorage.setItem("user", user);
             history.push('/')
+            setLoading(false);
         })
         .catch((error) => {
             var errorCode = error.code;
             var errorMessage = error.message;
             message.error(errorMessage)
+            setLoading(false);
         });
       };
     
@@ -80,12 +104,15 @@ const Login = (props)=>{
 
                 <Form.Item
                     wrapperCol={{
-                    offset: 8,
+                    offset: 5,
                     span: 16,
                     }}
                 >
-                    <Button type="primary" htmlType="submit">
+                    <Button type="primary" htmlType="submit" loading={loading}>
                     Login
+                    </Button>
+                    <Button type="link" onClick={() =>resetPassword()} loading={resetLoading}>
+                    Forgot Password?
                     </Button>
                 </Form.Item>
                 </Form>
